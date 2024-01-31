@@ -28,7 +28,7 @@ let length xs =
     length' xs 0
 ;;
 
-let rec rev input =
+let rev input =
     let rec rev' input output =
         match input with
         | [] -> output
