@@ -19,8 +19,22 @@ let rec nth (xs : 'a list) (n : int) =
     | _ -> None
 ;;
 
-let () =
-    match nth [ "a"; "b"; "c"; "d"; "f"; "g" ] 1 with
-    | Some x -> print_endline x
-    | None -> print_endline "Ain't none"
+let length xs =
+    let rec length' xs result =
+        match xs with
+        | [] -> result
+        | _ :: rest -> length' rest (result + 1)
+    in
+    length' xs 0
 ;;
+
+let rec rev input =
+    let rec rev' input output =
+        match input with
+        | [] -> output
+        | h :: t -> rev' t (h :: output)
+    in
+    rev' input []
+;;
+
+let () = List.iter print_string (rev [ "a"; "b"; "c"; "d"; "e"; "f"; "g" ])
