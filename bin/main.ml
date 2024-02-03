@@ -28,13 +28,41 @@ let length xs =
     length' xs 0
 ;;
 
-let rev input =
+let rev xs =
     let rec rev' input output =
         match input with
         | [] -> output
         | h :: t -> rev' t (h :: output)
     in
-    rev' input []
+    rev' xs []
 ;;
 
-let () = List.iter print_string (rev [ "a"; "b"; "c"; "d"; "e"; "f"; "g" ])
+let is_palindrome xs = xs = rev xs
+
+type 'a node =
+    | One of 'a
+    | Many of 'a node list
+
+let rec flatten xs =
+    let rec flatten' input output =
+        match input with
+        | [] -> output
+        | One x :: rest -> flatten' rest (x :: output)
+        | Many y :: rest -> flatten' rest (flatten' y output)
+    in
+    rev (flatten' xs [])
+;;
+
+let rec compress xs =
+    match xs with
+    | x :: (y :: _ as rest) -> if x = y then compress rest else x :: compress rest
+    | smaller -> smaller
+;;
+
+(* let pack xs = *)
+(*     match xs with *)
+(*         | x :: (y:: _ as rest) -> if x = y then  *)
+(**)
+let () =
+    List.iter print_string (compress [ "a"; "a"; "a"; "a"; "b"; "c"; "c"; "a"; "a"; "d"; "e"; "e"; "e"; "e" ])
+;;
